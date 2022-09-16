@@ -2,8 +2,9 @@
 $(document).ready(function(){
   // var latitude = position.coords.latitude;
   // var longitude = position.coords.longitude;
+  console.log("js자체는 정상 구동됨");
 
-  $(window).getJSON("https://api.openweathermap.org/data/2.5/weather?id=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+  getJSON("https://api.openweathermap.org/data/2.5/weather?id=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
     alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
     $(".nowTemp").append(nowWeather.main.temp+",");
     $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
