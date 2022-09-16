@@ -27,6 +27,14 @@
       $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
     });
 
+  function refresh() {
+    $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+    alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
+    $(".nowTemp").append(nowWeather.main.temp+"℃,");
+    $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+    });
+  }
+
     // $.ajax({
     //   dataType: "json",
     //   url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
@@ -44,7 +52,7 @@
 
     <h3 class="yourLocation">당신의 지역은 </h3>
 
-    <input type="button" name="날씨 갱신" value="refresh" onclick="">
+    <input type="button" name="날씨 갱신" value="날씨 갱신" onclick="refresh()">
 
     <h3 class="nowTemp">현재 기온은 </h3>
     <h3 class="nowWeather">현재 날씨는 </h3>
