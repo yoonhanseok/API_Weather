@@ -30,7 +30,6 @@
     $.ajax({
       dataType: "json",
       url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
-      data: param,
       async: false,
       type: "POST",
       success: function(data){
@@ -44,6 +43,8 @@
     <h1>날씨 및 지역 API 연습장</h1>
 
     <h3 class="yourLocation">당신의 지역은 </h3>
+
+    <input type="button" name="날씨 갱신" value="refresh">
 
     <h3 class="nowTemp">현재 기온은 </h3>
     <h3 class="nowWeather">현재 날씨는 </h3>
