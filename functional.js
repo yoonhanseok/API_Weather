@@ -12,11 +12,11 @@ navigator.geolocation.getCurrentPosition(function(pos) {
 
 
 // ===== 날씨 정보 불러오기 (Openweather API)=====
-const API_KEY = '당신의 API 키를 여기에 기재하세요';
+var API_KEY = '2f9208d55a53fee47a90364a43a9ef73';
 
 function onGeoOk(position) {
-   const latitude = position.coords.latitude;
-   const longitude = position.coords.longitude;
+   var latitude = position.coords.latitude;
+   var longitude = position.coords.longitude;
 
    // console.log(`You live in ${latitude} and ${longitude}`);
 
