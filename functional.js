@@ -1,22 +1,22 @@
 
-// $(document).ready(function(){
-//
-//   // var latitude = position.coords.latitude;
-//   // var longitude = position.coords.longitude;
-//
-//   $.getJSON("https://api.openweathermap.org/data/2.5/weather?id=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
-//     alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
-//     $(".nowTemp").append(nowWeather.main.temp+",");
-//     $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
-//   });
-//
-// });
+$(document).ready(function(){
 
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
-  alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
-  $(".nowTemp").append(nowWeather.main.temp+"℃,");
-  $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+  // var latitude = position.coords.latitude;
+  // var longitude = position.coords.longitude;
+
+  $(window).getJSON("https://api.openweathermap.org/data/2.5/weather?id=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+    alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
+    $(".nowTemp").append(nowWeather.main.temp+",");
+    $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+  });
+
 });
+
+// $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+//   alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
+//   $(".nowTemp").append(nowWeather.main.temp+"℃,");
+//   $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+// });
 
 //
 // /* 비동기적으로 현재 위치를 알아내어 지정된 요소에 출력한다. */
