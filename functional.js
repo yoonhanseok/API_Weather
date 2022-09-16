@@ -10,6 +10,8 @@ $(document).ready(function(){
     $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
   });
 
+});
+
 
 //
 // /* 비동기적으로 현재 위치를 알아내어 지정된 요소에 출력한다. */
@@ -114,5 +116,3 @@ $(document).ready(function(){
 // }
 //
 // navigator.geolocation.getCurrentPosition(onGeoOk, onGeoError);
-
-)};
