@@ -35,6 +35,13 @@
     });
   }
 
+  navigator.geolocation.getCurrentPosition(function(pos) {
+      console.log(pos);
+      var latitude = pos.coords.latitude;
+      var longitude = pos.coords.longitude;
+      alert("현재 위치는 : " + latitude + ", "+ longitude);
+  });
+
     // $.ajax({
     //   dataType: "json",
     //   url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
