@@ -18,15 +18,22 @@
 
   <title>날씨 및 지역 API 연습장</title>
   <script>
-      let map;
-      function initMap() {
-      map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: -34.397, lng: 150.644 },
-          zoom: 8,
-        });
-      }
+    let map;
 
-      window.initMap = initMap;
+    function initMap() {
+      var latitude = pos.coords.latitude;
+      var longitude = pos.coords.longitude;
+
+      console.log(latitude);
+      console.log(longitude);
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: latitude, lng: longitude },
+        zoom: 8,
+      });
+    }
+    
+    window.initMap = initMap;
   </script>
 
 </head>
