@@ -70,18 +70,11 @@
     var longitude = pos.coords.longitude;
     $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
 
-
-    var latitude = pos.coords.latitude;
-    var longitude = pos.coords.longitude;
-    var openWeatherURL = string("http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lng="+longitude+"&APPID=2f9208d55a53fee47a90364a43a9ef73&units=metric");
-
-    console.log.(openWeatherURL);
-
     $.ajax({
       dataType: "json",
       data: "param",
       // url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
-      url: openWeatherURL,
+      url: "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lng="+longitude+"&APPID=2f9208d55a53fee47a90364a43a9ef73&units=metric");,
       async: true,
       type: "POST",
       success: function(data){
