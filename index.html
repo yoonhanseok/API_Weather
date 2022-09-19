@@ -71,8 +71,7 @@
   $.ajax({
     dataType: "json",
     data: "param",
-    // url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
-    url: "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lng="+longitude+"&APPID=2f9208d55a53fee47a90364a43a9ef73&units=metric",
+    url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
     async: true,
     type: "POST",
     success: function(data){
@@ -80,6 +79,7 @@
       $(".nowWeather").append(data.weather[0].main+" 입니다.");
     }
   });
+
 // ===== Ajax를 이용한 위치정보 API END =====
 
   </script>
