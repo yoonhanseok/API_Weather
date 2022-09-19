@@ -39,6 +39,7 @@
       console.log(pos);
       var latitude = pos.coords.latitude;
       var longitude = pos.coords.longitude;
+      $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
       alert("현재 위치는 : " + latitude + ", "+ longitude);
   });
 
