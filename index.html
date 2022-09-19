@@ -72,7 +72,7 @@
     async: true,
     type: "POST",
     success: function(data){
-      $(".nowTemp").append(data.main.temp+",");
+      $(".nowTemp").append(data.main.temp+"℃,");
       $(".nowWeather").append(data.weather[0].main+" 입니다.");
     }
   });
