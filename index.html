@@ -17,6 +17,17 @@
   <script src="functional.js"></script>
 
   <title>날씨 및 지역 API 연습장</title>
+  <script>
+      let map;
+      function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -34.397, lng: 150.644 },
+          zoom: 8,
+        });
+      }
+
+      window.initMap = initMap;
+  </script>
 
 </head>
 <body>
@@ -44,10 +55,9 @@
     // $.ajax({
     //   dataType: "json",
     //   url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
-    //   async: false,
+    //   async: true,
     //   type: "POST",
     //   success: function(data){
-    //     alert(`현재 기온 : ${data.main.temp}, 날씨 : ${data.weather[0].main}`);
     //     $(".nowTemp").append(data.main.temp+",");
     //     $(".nowWeather").append(data.weather[0].main+" 입니다.");
     //   };
@@ -59,15 +69,15 @@
     <h3 class="yourLocation">당신의 좌표는 </h3>
     <h3 class="yourCityName">당신의 현재 지역은 </h3>
 
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO-KukIbi9was43YogwZ6Eqys4Rmj-_k8&callback=initMap"></script>
     <div id="map"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO-KukIbi9was43YogwZ6Eqys4Rmj-_k8&libraries=places&callback=initAutocomplete" async defer></script>
 
     <h3 class="nowTemp">현재 기온은 </h3>
     <h3 class="nowWeather">현재 날씨는 </h3>
-    <!-- <h3 class="nowWeather">현재 날씨는 </h3>
-    <h3 class="nowWeather">현재 날씨는 </h3> -->
+
+
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO-KukIbi9was43YogwZ6Eqys4Rmj-_k8&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO-KukIbi9was43YogwZ6Eqys4Rmj-_k8&libraries=places&callback=initAutocomplete" async defer></script>
 
 </body>
 </html>

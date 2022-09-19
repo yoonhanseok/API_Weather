@@ -1,16 +1,19 @@
-let map;
-
-function initMap() {
-  var latitude = pos.coords.latitude;
-  var longitude = pos.coords.longitude;
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: latitude, lng: longitude },
-    zoom: 8,
-  });
-}
-
-window.initMap = initMap;
+// let map;
+//
+// function initMap() {
+//   var latitude = pos.coords.latitude;
+//   var longitude = pos.coords.longitude;
+//
+//   console.log(latitude);
+//   console.log(longitude);
+//
+//   map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: latitude, lng: longitude },
+//     zoom: 8,
+//   });
+// }
+//
+// window.initMap = initMap;
 
 
 
