@@ -20,11 +20,13 @@
   <script>
     let map;
 
-    navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
+
     function initMap() {
+      navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
       var latitude = pos.coords.latitude;
       var longitude = pos.coords.longitude;
-
+      });
+      
       console.log(latitude);
       console.log(longitude);
 
@@ -35,7 +37,7 @@
     }
 
     window.initMap = initMap;
-    });
+
   </script>
 
 </head>
