@@ -70,10 +70,12 @@
     var longitude = pos.coords.longitude;
     $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
 
-    console.log.(openWeatherURL);
+
     var latitude = pos.coords.latitude;
     var longitude = pos.coords.longitude;
-    var openWeatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lng="+longitude+"&APPID=2f9208d55a53fee47a90364a43a9ef73"
+    var openWeatherURL = "http://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lng="+longitude+"&APPID=2f9208d55a53fee47a90364a43a9ef73";
+
+    console.log.(openWeatherURL);
 
     $.ajax({
       dataType: "json",
@@ -102,7 +104,7 @@
     <h3 class="nowWeather">현재 날씨는 </h3>
 
 
-    <script async
+    <script type="text/javascript" async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
