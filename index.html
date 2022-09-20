@@ -62,16 +62,19 @@
   navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
     var latitude = pos.coords.latitude;
     var longitude = pos.coords.longitude;
-    $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
     var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
-    
+
+    $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
     alert(locationURL);
   });
 
+  var latitude = pos.coords.latitude;
+  var longitude = pos.coords.longitude;
+  var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
   $.ajax({
     dataType: "json",
     data: "param",
-    url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
+    url: locationURL,
     async: true,
     type: "POST",
     success: function(data){
