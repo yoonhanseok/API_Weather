@@ -72,11 +72,10 @@
   // var longitude = pos.coords.longitude;
   // var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
 
-  $.ajax({
+  $.ajax("https://api.openweathermap.org/data/2.5/weather?lat=35.2300051&lon=129.078234&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric", {
     dataType: "json",
     data: "param",
-    url: "https://api.openweathermap.org/data/2.5/weather?lat=35.2300051&lon=129.078234&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric",
-    async: true,
+    async: false,
     type: "POST",
     success: function(data){
       $(".nowTemp").append(data.main.temp+"℃,");
