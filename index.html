@@ -27,6 +27,12 @@
         center: { lat: latitude, lng: longitude },
         zoom: 18,
       });
+
+      var marker = new google.maps.Marker({
+      position: { lat: latitude, lng: longitude },
+      map: map,
+      });
+
       });
     }
 
@@ -99,7 +105,7 @@
     <h3 class="weatherIcon"></h3>
 
     <!-- ===== 구글 지도 API START ===== -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap" defer></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap"></script>
     <!-- ===== 구글 지도 API END ===== -->
 </body>
 </html>
