@@ -23,9 +23,6 @@
       var latitude = pos.coords.latitude;
       var longitude = pos.coords.longitude;
 
-      console.log(latitude);
-      console.log(longitude);
-
       var map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: latitude, lng: longitude },
         zoom: 18,
@@ -65,7 +62,7 @@
 
   $.ajax({
     url: locationURL,
-    async: false,
+    async: true,
     type: "get",
     success: function(data){
       alert("SUCCESS");
@@ -102,8 +99,7 @@
     <h3 class="weatherIcon"></h3>
 
     <!-- ===== 구글 지도 API START ===== -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap&v=weekly" defer></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap" defer></script>
     <!-- ===== 구글 지도 API END ===== -->
 </body>
 </html>
