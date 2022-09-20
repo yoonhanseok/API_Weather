@@ -63,11 +63,11 @@
     var latitude = pos.coords.latitude;
     var longitude = pos.coords.longitude;
     $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
-  });
+
 
   $.ajax({
     dataType: "json",
-    data: JSON.stringfy(data),
+    // data: JSON.stringfy(data),
     url: "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
     async: true,
     type: "POST",
@@ -75,6 +75,8 @@
       $(".nowTemp").append(data.main.temp+"℃,");
       $(".nowWeather").append(data.weather[0].main+" 입니다.");
     }
+  });
+
   });
 
 // ===== Ajax를 이용한 위치정보 API END =====
