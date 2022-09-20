@@ -84,11 +84,11 @@
     dataType: "json",
     url: "https://api.openweathermap.org/data/2.5/weather?lat=35.2300051&lon=129.078234&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric",
     data: {},
-    async: false,
-    type: "get",
+    async: true,
+    type: "post",
     success: function(data){
       $(".nowTemp").append(data.main.temp+"℃,");
-      $(".nowWeather").append(data.weather[0].main+data.weather[0].icon+" 입니다.");
+      $(".nowWeather").append(data.weather[0].main+" 입니다.");
       // $(".nowWeather").append(data.weather.icon);
     }
   });
