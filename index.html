@@ -63,7 +63,7 @@
     var latitude = pos.coords.latitude;
     var longitude = pos.coords.longitude;
     $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
-    var locationURL = "abcd"+latitude+longitude+"efg";
+    var locationURL = "https://api.openweathermap.org/data/2.5/weather?&lang=kr&lat="+latitude+"&lon="+longitude+"&appid={API key}&units=metric";
 
     alert(locationURL);
   });
