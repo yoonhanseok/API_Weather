@@ -68,19 +68,19 @@
     alert(locationURL);
   });
 
-  var latitude = pos.coords.latitude;
-  var longitude = pos.coords.longitude;
-  var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
+  // var latitude = pos.coords.latitude;
+  // var longitude = pos.coords.longitude;
+  // var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
 
   $.ajax({
     dataType: "json",
     data: "param",
-    url: "https://api.openweathermap.org/data/2.5/weather?lat=35.2300051&lon=129.078234&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric",
+    url: "https://api.openweathermap.org/data/2.5/weather?lat=35.2300051&lon=129.078234&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric",
     async: true,
     type: "POST",
     success: function(data){
       $(".nowTemp").append(data.main.temp+"℃,");
-      $(".nowWeather").append(data.weather[0].main+" 입니다.").append(data.weather.icon);
+      $(".nowWeather").append(data.weather[0].main+" 입니다.");
       // $(".nowWeather").append(data.weather.icon);
     }
   });
