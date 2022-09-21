@@ -18,80 +18,83 @@
 
   <title>날씨 및 지역 API 연습장</title>
   <script>
-    function initMap() {
-      navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
+
+    // ===== Json을 사용한 위치정보 API START=====
+    //   $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+    //     // alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
+    //     $(".nowTemp").append(nowWeather.main.temp+"℃,");
+    //     $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+    //   });
+    //
+    //   function refresh() {
+    //   $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
+    //   // alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
+    //   $(".nowTemp").append(nowWeather.main.temp+"℃,");
+    //   $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
+    //   });
+    //   }
+    // ===== Json을 사용한 위치정보 API END =====
+
+    navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
       var latitude = pos.coords.latitude;
       var longitude = pos.coords.longitude;
+      var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric";
 
+      $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
+
+      //===== 구글 지도 API 변수정보 START =====
       var map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: latitude, lng: longitude },
         zoom: 18,
-      });
+      }); // 조작 가능한 지도 이미지 로딩
 
       var marker = new google.maps.Marker({
       position: { lat: latitude, lng: longitude },
       map: map,
-      });
+      }); // 지도에 불러온 위치 마커로 표시
+      //===== 구글 지도 API 변수정보 END =====
 
-      });
-    }
+      // ===== Ajax를 이용한 위치정보 API START =====
+      $.ajax({
+        url: locationURL,
+        async: true,
+        type: "get",
+        success: function(data){
+          // alert("Ajax 데이터: "+data);
+          // alert("ajax 구동 SUCCESS");
+          var weaIcon = data.weather[0].icon
+          var weaIconURL = "<img src='https://openweathermap.org/img/wn/"+weaIcon+"@2x.png'>";
 
-    window.initMap = initMap;
+          $(".nowTemp").append(data.main.temp+"℃,");
+          $(".nowWeather").append(data.weather[0].description+" 입니다.");
+          $(".yourCityName").append(data.name+" 입니다.");
+          $(".weatherIcon").append(weaIconURL);
+        }
+      })
+      .done(function(result) {
+        alert("날씨 전송 완료!");
+      }) //ajax통신 완료후에 정상이면 done이 가지고 있는 함수 호출
+    	.fail(function(error) {
+        alert("날씨를 불러오는데 실패했습니다!");
+    	}); //ajax통신 완료후에 비정상이면 fail이 가지고 있는 함수 호출
+      // ===== Ajax를 이용한 위치정보 API END =====
+    });
+
+
+
   </script>
 
 </head>
 <body>
   <script>
-// ===== Json을 사용한 위치정보 API START=====
-//   $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
-//     // alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
-//     $(".nowTemp").append(nowWeather.main.temp+"℃,");
-//     $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
-//   });
-//
-//   function refresh() {
-//   $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric", function(nowWeather){
-//   // alert(`현재 기온 : ${nowWeather.main.temp}, 날씨 : ${nowWeather.weather[0].main}`);
-//   $(".nowTemp").append(nowWeather.main.temp+"℃,");
-//   $(".nowWeather").append(nowWeather.weather[0].main+" 입니다.");
-//   });
-//   }
-// ===== Json을 사용한 위치정보 API END =====
 
 
-// ===== Ajax를 이용한 위치정보 API START =====
-  navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
-    var latitude = pos.coords.latitude;
-    var longitude = pos.coords.longitude;
-    var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&units=metric";
-    $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
 
-  $.ajax({
-    url: locationURL,
-    async: true,
-    type: "get",
-    success: function(data){
-      alert("SUCCESS");
-      var weaIcon = data.weather[0].icon
-      var weaIconURL = "<img src='https://openweathermap.org/img/wn/"+weaIcon+"@2x.png'>";
 
-      $(".nowTemp").append(data.main.temp+"℃,");
-      $(".nowWeather").append(data.weather[0].main+" 입니다.");
-      $(".weatherIcon").append(weaIconURL);
-    }
-  })
-  .done(function(result) {
-		alert("날씨 전송 완료!");
-	}) //ajax통신 완료후에 정상이면 done이 가지고 있는 함수 호출
-	.fail(function(error) {
-    alert("날씨를 불러오는데 실패했습니다!");
-	}); //ajax통신 완료후에 비정상이면 fail이 가지고 있는 함수 호출
-// }
-  });
-
-// ===== Ajax를 이용한 위치정보 API END =====
 
   </script>
+
+
     <div id="myLocationInfo"></div>
     <h1>날씨 및 지역 API 연습장</h1>
 
@@ -105,7 +108,7 @@
     <h3 class="weatherIcon"></h3>
 
     <!-- ===== 구글 지도 API START ===== -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU"></script>
     <!-- ===== 구글 지도 API END ===== -->
 </body>
 </html>
