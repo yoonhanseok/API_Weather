@@ -38,9 +38,28 @@
     navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
       var latitude = pos.coords.latitude;
       var longitude = pos.coords.longitude;
-      var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid=2f9208d55a53fee47a90364a43a9ef73&lang=kr&units=metric"; 
+      const openWeatherKey = "2f9208d55a53fee47a90364a43a9ef73";
+      var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+openWeatherKey+"&lang=kr&units=metric";
 
       $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
+
+      // ===== Ajax를 이용한 위치정보 API START =====
+      $.ajax({
+        url: locationURL,
+        type: "get",
+      }).done(function(data){
+        var weaIcon = data.weather[0].icon;
+        var weaIconURL = "<img src='https://openweathermap.org/img/wn/"+weaIcon+"@2x.png'>";
+
+        $(".nowTemp").append(data.main.temp+"℃,");
+        $(".nowWeather").append(data.weather[0].description+" 입니다.");
+        $(".yourCityName").append(data.name+" 입니다.");
+        $(".weatherIcon").append(weaIconURL);
+        console.log("날씨 불러오기 성공");
+      }).fail(function(error){
+        console.log(error);
+      });
+      // ===== Ajax를 이용한 위치정보 API END =====
 
       //===== 구글 지도 API 변수정보 START =====
       var map = new google.maps.Map(document.getElementById("map"), {
@@ -53,31 +72,6 @@
       map: map,
       }); // 지도에 불러온 위치 마커로 표시
       //===== 구글 지도 API 변수정보 END =====
-
-      // ===== Ajax를 이용한 위치정보 API START =====
-      $.ajax({
-        url: locationURL,
-        async: true,
-        type: "get",
-        success: function(data){
-          // alert("Ajax 데이터: "+data);
-          // alert("ajax 구동 SUCCESS");
-          var weaIcon = data.weather[0].icon
-          var weaIconURL = "<img src='https://openweathermap.org/img/wn/"+weaIcon+"@2x.png'>";
-
-          $(".nowTemp").append(data.main.temp+"℃,");
-          $(".nowWeather").append(data.weather[0].description+" 입니다.");
-          $(".yourCityName").append(data.name+" 입니다.");
-          $(".weatherIcon").append(weaIconURL);
-        }
-      })
-      .done(function(result) {
-        alert("날씨 전송 완료!");
-      }) //ajax통신 완료후에 정상이면 done이 가지고 있는 함수 호출
-    	.fail(function(error) {
-        alert("날씨를 불러오는데 실패했습니다!");
-    	}); //ajax통신 완료후에 비정상이면 fail이 가지고 있는 함수 호출
-      // ===== Ajax를 이용한 위치정보 API END =====
     });
 
 
