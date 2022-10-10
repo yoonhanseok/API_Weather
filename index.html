@@ -1,81 +1,88 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <!-- ===== 반응형 메타값 일반 / 반응형===== -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <!-- <script src="./vue.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.9/dist/vue.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script> -->
+  <script src="https://cdn.jsdelivr.net/jquery/1.12.4/jquery.min.js"></script>
 
-  <!-- ===== jQuery CDN ===== -->
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-
-
-  <!-- ===== 내부링크 ===== -->
-  <link rel="stylesheet" href="style.css">
-  <script src="functional.js"></script>
-
-  <title>날씨 및 지역 API 연습장</title>
-  <script>
-    navigator.geolocation.getCurrentPosition(function locationInfo(pos) {
-      var latitude = pos.coords.latitude;
-      var longitude = pos.coords.longitude;
-      const openWeatherKey = "2f9208d55a53fee47a90364a43a9ef73";
-      var locationURL = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+openWeatherKey+"&lang=kr&units=metric";
-
-
-      // ===== Ajax를 이용한 위치정보 API START =====
-      $.ajax({
-        url: locationURL,
-        type: "get",
-      }).done(function(data){
-        var weaIcon = data.weather[0].icon;
-        var weaIconURL = "<img src='https://openweathermap.org/img/wn/"+weaIcon+"@2x.png'>";
-
-        $(".nowTemp").append(data.main.temp+"℃,");
-        $(".nowWeather").append(data.weather[0].description+" 입니다.");
-        $(".yourCityName").append(data.name+" 입니다.");
-        $(".weatherIcon").append(weaIconURL);
-        console.log("날씨 불러오기 성공");
-      }).fail(function(error){
-        console.log(error);
-      });
-      // ===== Ajax를 이용한 위치정보 API END =====
-
-
-      // ===== 웹페이지에 위도&경도 출력 START =====
-      $(".yourLocation").append("위도: "+ latitude +", 경도: " + longitude);
-      // ===== 웹페이지에 위도&경도 출력 END =====
-
-
-      //===== 구글 지도 API 변수정보 START =====
-      var map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: latitude, lng: longitude },
-        zoom: 18,
-      }); // 조작 가능한 지도 이미지 로딩
-
-      var marker = new google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map: map,
-      }); // 지도에 불러온 위치 마커로 표시
-      //===== 구글 지도 API 변수정보 END =====
-    });
-  </script>
-
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+  <!-- <script src="https://unpkg.com/axios@1.1.0/dist/axios.min.js"></script> -->
+  <!-- <script src='https://unpkg.com/v-calendar'></script> -->
+  
+  <link rel="stylesheet" href="./style.css">
+  <title>날씨 달력</title>
 </head>
 <body>
-    <div id="myLocationInfo"></div>
-    <h1>날씨 및 지역 API 연습장</h1>
-
-    <h3 class="yourLocation">당신의 좌표는 </h3>
-    <h3 class="yourCityName">현재 당신의 위치는 </h3>
-
-    <div id="map"></div>
-
-    <h3 class="nowTemp">현재 기온은 </h3>
-    <h3 class="nowWeather">현재 날씨는 </h3>
-    <h3 class="weatherIcon"></h3>
-
-    <!-- ===== 구글 지도 API START ===== -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1zzTjTJe-AKEgvzr14FTaKluE1ngvOFU"></script>
-    <!-- ===== 구글 지도 API END ===== -->
+  <div id='app'>
+    <div class="tableWrap">
+      <div class="selectOptionWrap">
+        <input type="number" id="selectedYear" v-model=nowDATE[0]>
+        <button class="btnLeft" @click="monthMOVEL"><</button>
+        <select id="selectedMonth" v-model=nowDATE[1] @change=YearMonthSelect($event)>
+          <option v-for="(whatMonth,i) in monthNum" :key= "whatMonth" :value= monthNum[i]>{{ whatMonth }}월</option>
+        </select>
+        <button class="btnRight" @click="monthMOVER">></button>
+        <!-- <button v-for="(whatMonth,i) in monthNum" :key= "whatMonth" :value= monthNum>{{ whatMonth }}월</button> -->
+        <button id="searchButton" @click="YearMonthSelected()">조 회</button>
+      </div>
+      
+      <table class="tableBorder">
+        <thead>
+          <tr>
+            <th v-for="(dayName,i) in dayList" :key="dayName">{{ dayName }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td v-for="(resultCalendarRow_1,i) in resultCalendarRow[0].dayNumber" :key="resultCalendarRow_1" @click="[selectDATE=resultCalendarRow[0].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[0].dayNumber[i]>
+              <div>{{ resultCalendarRow_1 }}</div>
+              <span>{{ resultCalendarRow[0].weather[i] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="(resultCalendarRow_2,i) in resultCalendarRow[1].dayNumber" :key="resultCalendarRow_2" @click="[selectDATE=resultCalendarRow[1].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[1].dayNumber[i]>
+              <div>{{ resultCalendarRow_2 }}</div>
+              <span>{{ resultCalendarRow[1].weather[i] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="(resultCalendarRow_3,i) in resultCalendarRow[2].dayNumber" :key="resultCalendarRow_3" @click="[selectDATE=resultCalendarRow[2].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[2].dayNumber[i]>
+              <div>{{ resultCalendarRow_3 }}</div>
+              <span>{{ resultCalendarRow[2].weather[i] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="(resultCalendarRow_4,i) in resultCalendarRow[3].dayNumber" :key="resultCalendarRow_4" @click="[selectDATE=resultCalendarRow[3].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[3].dayNumber[i]>
+              <div>{{ resultCalendarRow_4 }}</div>
+              <span>{{ resultCalendarRow[3].weather[i] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="(resultCalendarRow_5,i) in resultCalendarRow[4].dayNumber" :key="resultCalendarRow_5" @click="[selectDATE=resultCalendarRow[4].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[4].dayNumber[i]>
+              <div>{{ resultCalendarRow_5 }}</div>
+              <span>{{ resultCalendarRow[4].weather[i] }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="(resultCalendarRow_6,i) in resultCalendarRow[5].dayNumber" :key="resultCalendarRow_6" @click="[selectDATE=resultCalendarRow[5].dayNumber[i], selectDayNum()]" :value=resultCalendarRow[5].dayNumber[i]>
+              <div>{{ resultCalendarRow_6 }}</div>
+              <span>{{ resultCalendarRow[5].weather[i] }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="weatherDisplayWrap">
+        <span v-for="(weeklyWeather, i) in selectedWeather[0].weather" :key="weeklyWeather">
+          <div class="weeklyTemp">{{ selectedWeather[0].sDate[i] }}일</div>
+          <div class="weeklyTemp">{{ selectedWeather[0].weather[i] }}°C</div>
+        </span>
+      </div>
+      
+    </div>
+  </div>
+  <script src="./app.js"></script>
 </body>
 </html>
